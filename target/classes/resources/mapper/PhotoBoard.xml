@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PhotoBoard">
+	<insert id="insertPhotoBoard">
+		insert into photo_board(pb_num, pb_title, pb_content, pb_photo_name, pb_photo_path, credat,cretim)
+		values(seq_pb_num.nextval,#{pbTitle},#{pbContent},#{pbPhotoName},#{pbPhotoPath},
+		TO_CHAR(sysdate, 'YYYYMMDD'),TO_CHAR(SYSDATE,'HH24MISS')
+		)
+	</insert>
+	<select id="selectPhotoBoardList" resultType="pb" parameterType="pb">
+		select * from (select rownum rcnt, pb.* from 
+		(select * from photo_board
+		order by pb_num desc) pb
+		where rownum&lt;=#{page.endNum})
+		where rcnt&gt;=#{page.startNum}
+	</select>
+	
+	<select id="selectPhotoBoardCount" resultType="int">
+		select count(1) from photo_board
+	</select> 
+</mapper>
+
+
+
+
+
+
+
