@@ -63,5 +63,9 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 		model.addAttribute("pbList",pbdao.selectPhotoBoardList(pb));
 		return null;
 	}
+	@Override
+	public int deletePhotoBoards(int[] pbNums) {
+		return pbdao.deletePhotoBoards(pbNums);
+	}
 
 }

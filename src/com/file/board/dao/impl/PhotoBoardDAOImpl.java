@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,5 +39,22 @@ public class PhotoBoardDAOImpl implements PhotoBoardDAO {
 			return ss.selectOne("PhotoBoard.selectPhotoBoardCount", pb);
 		}
 	}
-	
+
+	@Override
+	public int deletePhotoBoards(int[] pbNums) {
+		try(SqlSession ss = ssf.openSession()){
+			int cnt = 0;
+			for(int pbNum:pbNums) {
+				cnt += ss.delete("PhotoBoard.deletePhotoBoard",pbNum);
+			}
+			return cnt;
+		}
+	}
+
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoardsForDelete(int[] pbNums) {
+		try(SqlSession ss = ssf.openSession()){
+			return ss.selectList("PhotoBoard.selectPhotoBoardsForDelete",pbNums);
+		}
+	}	
 }

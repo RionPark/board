@@ -12,14 +12,58 @@
 	<select id="selectPhotoBoardList" resultType="pb" parameterType="pb">
 		select * from (select rownum rcnt, pb.* from 
 		(select * from photo_board
+		<where>
+			<if test='pbTitle!=null and pbTitle!=""'>
+				and pb_title like '%' || #{pbTitle} || '%'
+			</if>
+			<if test='pbContent !=null and pbContent !=""'>
+				and pb_content like '%' || #{pbContent} || '%'
+			</if>
+			<if test='credat1 !=null and credat1 !=""'>
+				and credat &gt;= replace(#{credat1},'-','')
+			</if>
+			<if test='credat2 !=null and credat2 !=""'>
+				and credat &lt;= replace(#{credat2},'-','')
+			</if>
+		</where>
 		order by pb_num desc) pb
 		where rownum&lt;=#{page.endNum})
 		where rcnt&gt;=#{page.startNum}
 	</select>
-	
+	<!-- 
+	int[] arr= [1,2,5,7]
+	 -->
+	<select id="selectPhotoBoardsForDelete"	resultType="pb">
+		select PB_PHOTO_PATH from photo_board
+		<where>
+			<foreach collection="array" item="pbNum" separator="or" 
+			open="(" close=")">
+				pb_num = #{pbNum}
+			</foreach>
+			and PB_PHOTO_PATH is not null
+		</where>
+	</select>
 	<select id="selectPhotoBoardCount" resultType="int">
 		select count(1) from photo_board
+		<where>
+			<if test='pbTitle!=null and pbTitle!=""'>
+				and pb_title like '%' || #{pbTitle} || '%'
+			</if>
+			<if test='pbContent !=null and pbContent !=""'>
+				and pb_content like '%' || #{pbContent} || '%'
+			</if>
+			<if test='credat1 !=null and credat1 !=""'>
+				and credat &gt;= replace(#{credat1},'-','')
+			</if>
+			<if test='credat2 !=null and credat2 !=""'>
+				and credat &lt;= replace(#{credat2},'-','')
+			</if>
+		</where>
 	</select> 
+	<delete id="deletePhotoBoard">
+		delete from photo_board
+		where pb_num = ${pb_num}
+	</delete>
 </mapper>
 
 

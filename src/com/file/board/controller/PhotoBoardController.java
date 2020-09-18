@@ -18,11 +18,18 @@ public class PhotoBoardController {
 
 	@Autowired
 	private PhotoBoardService pbService;
-	
+
 	@RequestMapping(value="/photo/list",method=RequestMethod.GET)
 	public String goList(@ModelAttribute PhotoBoardVO pb,Model model) {
+		System.out.println(pb);
 		pbService.selectPhotoBoardList(pb,model);
 		return "photo/list";
+	}
+	
+	@RequestMapping(value="/photo/delete",method=RequestMethod.POST)
+	public String deletePhotoBoards(@RequestParam("pbNums")int[] pbNums) {
+		pbService.deletePhotoBoards(pbNums);
+		return "redirect:/photo/list?page.pageNum=1";
 	}
 
 	@RequestMapping(value="/photo/write",method=RequestMethod.GET)
