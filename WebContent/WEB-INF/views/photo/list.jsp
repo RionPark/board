@@ -36,7 +36,7 @@
 			</c:if>
 			<c:if test="${!empty pbList }">
 				<c:forEach items="${pbList}" var="pb">
-					<tr>
+					<tr onclick="test(${pb.pbNum})" >
 						<td><input type="checkbox" name="pbNums" value="${pb.pbNum}"></td>
 						<td>${pb.pbNum}</td>
 						<td>${pb.pbTitle}</td>
@@ -73,6 +73,11 @@ function allCheck(obj){
 	for(var i=0;i<chkObjs.length;i++){
 		chkObjs[i].checked = obj.checked;
 	}
+}
+function test(pbNum){
+	if(event.target.type=='checkbox') return;
+		
+	alert(pbNum);
 }
 </script>
 </body>

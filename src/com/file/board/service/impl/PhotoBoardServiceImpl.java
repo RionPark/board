@@ -65,6 +65,16 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 	}
 	@Override
 	public int deletePhotoBoards(int[] pbNums) {
+		List<PhotoBoardVO> pbList = pbdao.selectPhotoBoardsForDelete(pbNums);
+		if(!pbList.isEmpty()) {
+			for(PhotoBoardVO pb : pbList) {
+				String fileName = pb.getPbPhotoPath();
+				File f = new File(uploadPath+fileName);
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+		}
 		return pbdao.deletePhotoBoards(pbNums);
 	}
 

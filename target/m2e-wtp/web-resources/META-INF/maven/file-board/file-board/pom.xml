@@ -9,7 +9,9 @@
 	<properties>
 		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
 	</properties>
+	
 	<build>
+		<finalName>test</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
