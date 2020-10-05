@@ -11,7 +11,7 @@
 	</properties>
 	
 	<build>
-		<finalName>test</finalName>
+		<finalName>test1</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
